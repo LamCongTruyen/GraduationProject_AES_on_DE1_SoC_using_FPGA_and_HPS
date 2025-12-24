@@ -1,0 +1,13 @@
+# Quartus
+db/
+greybox_tmp/
+incremental_db/
+simulation/
+hps_isw_handoff/
+
+# Computer_System
+Computer_System/testbench/
+Computer_System/simulation/
+
+*.txt
+*.stp

@@ -1,0 +1,20 @@
+module customtrigger_makebyme(
+	input acq_clk, reset,
+	input [6:0] data_in,
+	output reg trigger_out);
+	
+reg [1:0] count = 2'd0;
+
+	always @(acq_clk) begin
+		if(data_in == 7'd1) begin
+			count <= 2'd1;
+		end 
+		if(count == 2'd1) begin
+			if(data_in == 7'd0) begin
+				trigger_out <= 1'b1;
+			end else begin
+				trigger_out <= 1'b0;
+			end
+		end
+	
+	end
