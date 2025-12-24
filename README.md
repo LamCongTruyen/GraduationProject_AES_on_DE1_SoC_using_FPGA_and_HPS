@@ -4,6 +4,7 @@
 
 <img width="570" height="461" alt="image" src="https://github.com/user-attachments/assets/7599be84-4121-4fbb-a817-3a9fda7aadc3" />
 
+Dự án thực hiện trên bo mạch phát triển DE1-SoC, đặt mục tiêu xây dựng một hệ thống
 Cấu hình Platform Design (Qsys):
 
 <img width="1916" height="1050" alt="image" src="https://github.com/user-attachments/assets/40997467-6cdd-478d-8a0d-df1efd86243d" />
