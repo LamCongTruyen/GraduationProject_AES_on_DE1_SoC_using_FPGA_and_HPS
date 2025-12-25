@@ -18,11 +18,15 @@ Sơ đồ khối hệ thống gồm:
 <img width="779" height="444" alt="image" src="https://github.com/user-attachments/assets/6151ffd2-ebcb-46f2-a6d8-6de926f2fdbd" />
 
 
-Cấu hình Platform Design (Qsys):
+Cấu hình Platform Designer (trước đây là Qsys):
 <img width="1916" height="1050" alt="image" src="https://github.com/user-attachments/assets/40997467-6cdd-478d-8a0d-df1efd86243d" />
 
+Bằng việc tham khảo các Golden Hardware Reference Design trong thư mục hướng dẫn cho người mới bắt đầu của Terasic, cũng như đọc qua các báo cáo của khóa hoc ECE576 của Đại học Cornell. Từ đó học cách sử dụng cách giao tiếp giữa HPS và FGPA, mặc dù có các cách cho tốc độ cao hơn như là: DMA, dual FIFO nhưng các cách này yêu cầu độ khó cao cũng như cần hiểu biết sâu hơn. Thời gian thực hiện không còn nhiều nên tôi quyết định chọn cách đó là gửi dữ liệu từ HPS đến FPGA bằng FIFO và đọc ngược lại bằng vùng nhớ có thể nhìn chung Onchip Memory.
 
-Tôi tìm hiểu và xây dựng dự án đầu tiên trên dòng DE1-SoC, với ý tưởng làm quen trên dòng SoC FPGA này là boot Linux trên HPS và truyền nhận dữ liệu xuống FPGA qua các IP trong Qsys (Platform Design trong Quatus Prime).
+Luồng thiết kế khi sử dụng công cụ Platform Designer:
+<img width="922" height="700" alt="image (8)" src="https://github.com/user-attachments/assets/94e58f41-e0f8-4f97-834c-ce51c34242bd" />
+Lưu đồ giải thuật chương trình C thực hiện giao tiếp giữa HPS và FPGA, các ô màu xanh dương là các lệnh thực thi trên HPS còn các ô màu xanh lục là các lệnh thực thi trên FPGA:
+<img width="909" height="909" alt="image (7)" src="https://github.com/user-attachments/assets/daa717a3-a311-46cc-96eb-4e9709357a34" />
 
 Dòng SoCFPGA này cũng cho phép chạy một webserver bằng ngôn ngữ HTML nhưng vì tôi không thành thạo ngôn ngữ này nên đã chạy một server hết sức đơn giản bằng Python trên laptop Window sau đó gửi hình ảnh từ server tới HPS qua cổng Ethernet được kết nối trong mạng cục bộ. HPS nhận hình ảnh và xử lý bằng chương trình C chuyển hình ảnh thành các byte sau đó ánh xạ bộ nhớ tới các địa chỉ được khai báo ở đầu chương trình. Các địa chỉ này sinh ra trong quá trình Generate HDL trong Qsys nằm trong vùng bộ nhớ mặc định của FPGA được nhắc tới trong mục2:
 
