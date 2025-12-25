@@ -73,25 +73,17 @@ So sánh hai kết quả, có thể thấy được tốc độ toàn bộ hệ 
 
 <img width="752" height="884" alt="image" src="https://github.com/user-attachments/assets/2c0ce9ae-7f26-4c85-88db-6fb5301be965" />
 
-https://ftp.intel.com/Public/Pub/fpgaup/pub/Intel_Material/18.1/Computer_Systems/DE1-SoC/DE1-SoC_Computer_NiosII.pdf
+Tốc độ toàn bộ quá trình mã hóa cũng như giải mã dao động vào khoảng 4.5 đến 4.7MB/s (hình 4.23), tốc độ này hoàn toàn vẫn có thể tối ưu hơn chứ chưa phải là giới hạn. Dữ liệu (dữ liệu ở đây là hình ảnh) nhận từ client sau khi mã hóa/giải mã thì kích thước không hề thay đổi, dữ liệu với kích thước được toàn vẹn sau toàn bộ quy trình của cả hệ thống. Tốc độ ở khâu mã hóa có chút khác biệt với giải mã tại vì trong dự án này nhóm chọn phương thức nhận dữ liệu và phản hồi lại cho HPS là hai phương thức khác nhau. Điều này thì không gây ảnh hưởng gì đến độ chính xác cũng như là vi phạm bất cứ yêu cầu an toàn nào của hệ thống.
 
-Khi làm việc với dòng SoC này tôi tham khảo phần lớn tài liệu từ dự án Cornell ece5760 theo tôi tìm hiểu thì đây là một khóa đào tạo của đại học Cornell với sự hỗ trợ của Intel. Dự án hướng dẫn cho người học về lí thuyết các IP trong Qsys đi kèm chương trình mẫu, đường link dự án : 
+# Giao diện thao tác PyQt5
+Giao diện PyQt5 thực hiện quy trình với dữ liệu được tải lên từ máy tính
+<img width="828" height="424" alt="image" src="https://github.com/user-attachments/assets/9c264fc9-ba53-40dc-aa5f-9f3832bb5417" />
 
-https://people.ece.cornell.edu/land/courses/ece5760/DE1_SOC/HPS_peripherials/FPGA_addr_index.html
+Giao diện PyQt5 thực hiện quy trình với dữ liệu từ ESPCam
+<img width="839" height="429" alt="image" src="https://github.com/user-attachments/assets/8c709cce-8f3c-45cb-b946-ec4d0532c150" />
 
-Trang Youtube của BruceLand (một bên đồng hành cùng dự án) :
+# Giao diện winform giao tiếp UART với module AES
+<img width="935" height="525" alt="image" src="https://github.com/user-attachments/assets/c1e14dde-6c6c-4caf-9183-56d2b03dff9e" />
 
-https://www.youtube.com/@ece4760
-
-
-Kết quả chạy trên phần cứng thực tế cho tốc độ mã hóa cũng khá ấn tượng:
-
-<img width="592" height="378" alt="image" src="https://github.com/user-attachments/assets/30dac101-77a0-4c41-9874-f4dc7bef481a" />
-
-Video chạy thực tế trên phần cứng mà tôi đã thực hiện :
-
-https://youtu.be/S9YSKvQt69U
-
-À, một số ràng buộc về timing của SocFPGA vì thiếu tài liệu chính xác phải nên cài đặt như thế nào nên tôi sử dụng mặc định theo cài đặt của dự án gốc trong tutorial của Terasic.
-
-Dự án này nối tiếp dự án UART on FPGA trước đó của tôi nên bạn sẽ thấy có 1 vài file không liên quan lắm ^^.
+# Triển khai thực tế trên DE1-SoC
+<img width="926" height="521" alt="image" src="https://github.com/user-attachments/assets/644e4eea-b73a-408d-b05f-684466566c9e" />
