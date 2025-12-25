@@ -20,14 +20,21 @@ Sơ đồ khối hệ thống gồm:
 Cấu hình Platform Designer (trước đây là Qsys):
 <img width="1916" height="1050" alt="image" src="https://github.com/user-attachments/assets/40997467-6cdd-478d-8a0d-df1efd86243d" />
 
-Bằng việc tham khảo các Golden Hardware Reference Design trong thư mục hướng dẫn cho người mới bắt đầu của Terasic, cũng như đọc qua các báo cáo của khóa hoc ECE576 của Đại học Cornell. Từ đó học cách sử dụng cách giao tiếp giữa HPS và FGPA, mặc dù có các cách cho tốc độ cao hơn như là: DMA, dual FIFO nhưng các cách này yêu cầu độ khó cao cũng như cần hiểu biết sâu hơn. Thời gian thực hiện không còn nhiều nên tôi quyết định chọn cách đó là gửi dữ liệu từ HPS đến FPGA bằng FIFO và đọc ngược lại bằng vùng nhớ có thể nhìn chung Onchip Memory.
+Bằng việc tham khảo các Golden Hardware Reference Design trong thư mục hướng dẫn cho người mới bắt đầu của Terasic, cũng như đọc qua các báo cáo của dự án ECE5760 của Đại học Cornell. Từ đó học cách sử dụng cách giao tiếp giữa HPS và FGPA, mặc dù có các cách cho tốc độ cao hơn như là: DMA, dual FIFO nhưng các cách này yêu cầu độ khó cao cũng như cần hiểu biết sâu hơn. Thời gian thực hiện không còn nhiều nên tôi quyết định chọn cách đó là gửi dữ liệu từ HPS đến FPGA bằng FIFO và đọc ngược lại bằng vùng nhớ có thể nhìn chung Onchip Memory.
 
 Luồng thiết kế khi sử dụng công cụ Platform Designer:
 <img width="700" height="500" alt="image (8)" src="https://github.com/user-attachments/assets/94e58f41-e0f8-4f97-834c-ce51c34242bd" />
-Lưu đồ giải thuật chương trình C thực hiện giao tiếp giữa HPS và FPGA, các ô màu xanh dương là các lệnh thực thi trên HPS còn các ô màu xanh lục là các lệnh thực thi trên FPGA:
-<img width="800" height="600" alt="image (7)" src="https://github.com/user-attachments/assets/daa717a3-a311-46cc-96eb-4e9709357a34" />
 
-Dòng SoCFPGA này cũng cho phép chạy một webserver bằng ngôn ngữ HTML nhưng vì tôi không thành thạo ngôn ngữ này nên đã chạy một server hết sức đơn giản bằng Python trên laptop Window sau đó gửi hình ảnh từ server tới HPS qua cổng Ethernet được kết nối trong mạng cục bộ. HPS nhận hình ảnh và xử lý bằng chương trình C chuyển hình ảnh thành các byte sau đó ánh xạ bộ nhớ tới các địa chỉ được khai báo ở đầu chương trình. Các địa chỉ này sinh ra trong quá trình Generate HDL trong Qsys nằm trong vùng bộ nhớ mặc định của FPGA được nhắc tới trong mục2:
+Lưu đồ giải thuật chương trình C thực hiện giao tiếp giữa HPS và FPGA, các ô màu xanh dương là các lệnh thực thi trên HPS còn các ô màu xanh lục là các lệnh thực thi trên FPGA:
+<img width="909" height="909" alt="image (7)" src="https://github.com/user-attachments/assets/fbceba74-1045-4a61-a28f-94f07499bc4a" />
+
+Dạng sóng testbench topmodule thiết kế sử dụng UART truyền nhận dữ liệu cho module AES:
+<img width="1846" height="584" alt="image (5)" src="https://github.com/user-attachments/assets/1601bd26-1e68-43aa-aa4b-b27f8f1f2b79" />
+
+Phóng to dạng sóng thời điểm AES xử lý:
+<img width="1101" height="501" alt="image (4)" src="https://github.com/user-attachments/assets/b5833411-420a-4290-8e6e-b51ec2a3bb2a" />
+
+
 
 https://ftp.intel.com/Public/Pub/fpgaup/pub/Intel_Material/18.1/Computer_Systems/DE1-SoC/DE1-SoC_Computer_NiosII.pdf
 
@@ -39,9 +46,6 @@ Trang Youtube của BruceLand (một bên đồng hành cùng dự án) :
 
 https://www.youtube.com/@ece4760
 
-Trong phần giao tiếp HPS - FPGA mà trong đường link trên đề cập có 4 cách chính, tôi chọn cách mà tôi nghĩ là phù hợp với mình đó là "HPS to FPGA FIFO with feedback via SRAM scratchpad". Có thể hiểu là HPS giao tiếp với FPGA thông qua IP FIFO trong Qsys, FPGA làm gì đó với dữ liệu và ghi vào vùng SRAM chia sẽ chung giữa HPS và FPGA. HPS 'nhìn thấy' vùng nhớ đó là lấy dữ liệu thực hiện hoặc lưu trữ. Trước đó tôi cũng thử dùng "Full FIFO communication: HPS-to-FPGA and FPGA-to-HPS" nhưng việc bắt tay giữa các module thất bại nên tôi chọn cách mà tôi cho rằng mình nắm rõ hơn là "HPS to FPGA FIFO with feedback via SRAM scratchpad".
-
-Tham khảo cách giao tiếp bên trong dự án tôi áp dụng vào dự án của mình như sau : trên HPS với Linux kernel 3.9 thì tôi xây dựng một chương trình C cho phép nhận ảnh từ webserver local (built đơn giản với python) sau đó chuyển hình ảnh ở dạng file nén jpg hoặc png dữ liệu byte. Ghi lần lượt dữ liệu ảnh xuống FPGA qua công cụ mmap ,FPGA nhận dữ liệu và đưa vào module AES_CTR để giải mã. Với mã hóa thì cũng thực hiện tương tự như vậy.
 
 Kết quả chạy trên phần cứng thực tế cho tốc độ mã hóa cũng khá ấn tượng:
 
